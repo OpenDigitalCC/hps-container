@@ -1,0 +1,13 @@
+services:
+  hps:
+    build: .
+    container_name: hps
+    ports:
+      - "80:80"
+      - "67:67/udp"
+      - "69:69/udp"
+    volumes:
+      - ./srv:/srv
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
