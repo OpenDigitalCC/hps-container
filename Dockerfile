@@ -6,6 +6,7 @@ RUN apt-get update \
    && apt-get install -y \
     nginx \
     spawn-fcgi \
+    rsyslog \
     fcgiwrap \
     curl \
     iputils-ping \
@@ -17,6 +18,7 @@ RUN apt-get update \
     tcpdump \
     ipxe \
     gpg \
+    git \
     libarchive-tools \
    && apt-get clean \
    && rm -rf /var/lib/apt/lists/*
@@ -26,5 +28,7 @@ RUN apt-get update \
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+RUN for i in $(seq 0 7); do   mknod -m 660 /dev/loop$i b 7 $i; done
 
 ENTRYPOINT ["/entrypoint.sh"]
