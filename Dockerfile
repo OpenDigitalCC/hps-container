@@ -25,6 +25,12 @@ RUN apt-get update \
     createrepo-c \
     jq \
     ca-certificates \
+    perl \
+    libwww-perl \
+    liblwp-protocol-https-perl \
+    libio-socket-ssl-perl \
+    libjson-perl \
+    openssl \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
