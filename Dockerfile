@@ -3,12 +3,14 @@ FROM debian:trixie-slim
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
-   && apt-get install -y \
+ && apt-get install -y --no-install-recommends \
     nginx \
     spawn-fcgi \
     rsyslog \
     fcgiwrap \
     curl \
+    rsync \
+    wget \
     iputils-ping \
     vim \
     dnsmasq \
@@ -20,15 +22,16 @@ RUN apt-get update \
     gpg \
     git \
     libarchive-tools \
-   && apt-get clean \
-   && rm -rf /var/lib/apt/lists/*
-
-# Create supervisor config directory
-#RUN mkdir -p /etc/supervisor/conf.d
+    createrepo-c \
+    jq \
+    ca-certificates \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-RUN for i in $(seq 0 7); do   mknod -m 660 /dev/loop$i b 7 $i; done
+# Pre-create loop devices
+RUN for i in $(seq 0 7); do mknod -m 660 /dev/loop$i b 7 $i; done
 
 ENTRYPOINT ["/entrypoint.sh"]
