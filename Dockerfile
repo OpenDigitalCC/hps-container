@@ -33,6 +33,12 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
+# One group owns the IPS state. Root writers (supervisor pre-start, CLIs) and
+# the web user (lighttpd drops to www-data for the CGI) both write the registry
+# through it; see hps-system/docs/SECURITY.md. keysafe stays root-only.
+RUN groupadd -r hps \
+ && usermod -aG hps www-data
+
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
