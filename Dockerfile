@@ -30,8 +30,15 @@ RUN apt-get update \
     libjson-perl \
     openssl \
     chrony \
+    open-iscsi \
+    procps \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
+
+# open-iscsi: the iSCSI initiator for scripts/hps-iscsi-test.sh (lab test of a
+# node's export). The container cannot load kernel modules: the HOST needs
+# iscsi_tcp loaded; the script checks and says so. It starts iscsid itself.
+# procps: pgrep, used by that script.
 
 # One group owns the IPS state. Root writers (supervisor pre-start, CLIs) and
 # the web user (lighttpd drops to www-data for the CGI) both write the registry
