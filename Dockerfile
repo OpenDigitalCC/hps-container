@@ -4,10 +4,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
-    nginx \
-    spawn-fcgi \
     rsyslog \
-    fcgiwrap \
+    lighttpd \
     curl \
     rsync \
     wget \

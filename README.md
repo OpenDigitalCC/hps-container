@@ -64,7 +64,7 @@ Deploy your sovereign private data space with hps-container plus hps-system.
 
 ## Contents
 
-- `Dockerfile` — Defines the container environment (Debian-based), installs necessary services (nginx, fcgiwrap, dnsmasq, tftpd-hpa), and sets up entrypoint.
+- `Dockerfile` — Defines the container environment (Debian-based), installs necessary services (lighttpd, dnsmasq, tftpd-hpa), and sets up entrypoint.
 - `docker-compose.yml` — Mounts `/srv` from the host, exposes ports for HTTP, DHCP, and TFTP.
 - `srv/` — Empty placeholder directory where `hps-system` should be placed and extracted.
 
