@@ -50,8 +50,10 @@ RUN groupadd -r hps \
 # runs ctrl-exec-api, whose unix socket is group hps so the root job runner and
 # the state group can call it; the user must be in hps to own such a socket.
 # ADR 0006 (hps-system).
-RUN groupadd -r ctrl-exec \
- && useradd -r -M -s /usr/sbin/nologin -g ctrl-exec -G hps ctrl-exec
+# Fixed ids: the dispatcher config and state persist under /srv across image
+# rebuilds, so the user and group must not drift between images.
+RUN groupadd -r -g 1210 ctrl-exec \
+ && useradd -r -M -s /usr/sbin/nologin -u 1210 -g ctrl-exec -G hps ctrl-exec
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
