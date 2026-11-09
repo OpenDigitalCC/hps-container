@@ -39,6 +39,13 @@ RUN apt-get update \
 RUN groupadd -r hps \
  && usermod -aG hps www-data
 
+# The ctrl-exec service user (the dispatcher install keeps an existing one). It
+# runs ctrl-exec-api, whose unix socket is group hps so the root job runner and
+# the state group can call it; the user must be in hps to own such a socket.
+# ADR 0006 (hps-system).
+RUN groupadd -r ctrl-exec \
+ && useradd -r -M -s /usr/sbin/nologin -g ctrl-exec -G hps ctrl-exec
+
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
