@@ -31,6 +31,7 @@ RUN apt-get update \
     libio-socket-ssl-perl \
     libjson-perl \
     openssl \
+    chrony \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
