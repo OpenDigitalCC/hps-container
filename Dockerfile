@@ -16,6 +16,7 @@ RUN apt-get update \
     tftpd-hpa \
     ipcalc \
     tcpdump \
+    bind9-dnsutils \
     ipxe \
     gpg \
     git \
