@@ -33,9 +33,15 @@ RUN apt-get update \
     chrony \
     open-iscsi \
     procps \
+    openssh-client \
+    sshpass \
+    ipmitool \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
+# openssh-client + sshpass: hps-bmc console on an HPE iLO (Virtual Serial Port
+# over ssh; the password reaches sshpass in its environment, from the keysafe).
+# ipmitool: the hps-bmc ipmi driver (power, status, sol console).
 # open-iscsi: the iSCSI initiator for scripts/hps-iscsi-test.sh (lab test of a
 # node's export). The container cannot load kernel modules: the HOST needs
 # iscsi_tcp loaded; the script checks and says so. It starts iscsid itself.
